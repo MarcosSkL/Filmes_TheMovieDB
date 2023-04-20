@@ -2,15 +2,51 @@ import { Card, Col, Row } from 'react-bootstrap'
 import Pagina from '../../components/Pagina'
 import apiMovies from '../../services/apiMovies'
 
-const Detalhes = ({ filme }) => {
+const Detalhes = ({ filme, atores }) => {
 
     return (
         <Pagina titulo={filme.title}>
-            <Row className='md-5'>
-                <Col>
-                    <Card.Img style={{ Width: '100%', height: '100%' }} variant="top" src={'https://image.tmdb.org/t/p/w500/' + filme.backdrop_path} />
-                    
+            <Row>
+                <Col md={3}>
+                    <Card.Img style={{ Width: '100%', height: '100%' }} variant="top" src={'https://image.tmdb.org/t/p/w500/' + filme.poster_path} />
+
                 </Col>
+                <Col md={9}>
+                    <h3>Sinopse</h3>
+                    <p>{filme.overview}</p>
+                    <p><strong>Data de Lançamento: </strong>{filme.release_date}</p>
+                    <p><strong>Duração: </strong>{filme.runtime}</p>
+                    <p><strong>Nota: </strong>{filme.vote_average}</p>
+                    <div>
+
+                        <ul>
+                            {filme.genres.map(item => (
+
+                                <li>{item.name}</li>
+
+                            ))}
+                        </ul>
+                    </div>
+
+                </Col>
+            </Row>
+
+            <h3 className='pt-5'>Atores</h3>
+
+            <Row className='p-3'>
+
+                {atores.cast.map(item => (
+                    <Col md={2}>
+
+
+                        <img style={{ Width: '500px', height: '200px' }} variant="top" src={'https://image.tmdb.org/t/p/w500/' + item.profile_path} />
+                        <p><em>{item.name}</em></p>
+                    </Col>
+
+                ))}
+
+
+
             </Row>
         </Pagina>
     )
@@ -22,10 +58,13 @@ export async function getServerSideProps(context) {
 
     const id = context.params.id
 
-    const resultado = await apiMovies.get('/movie/' + id)
+    const resultado = await apiMovies.get('/movie/' + id + '?language=pt-BR')
+    const ator = await apiMovies.get('/movie/' + id + '/credits' + '?language=pt-BR')
+
     const filme = resultado.data
+    const atores = ator.data
 
     return {
-        props: { filme }
+        props: { filme, atores }
     }
 }

@@ -34,7 +34,7 @@ export default index
 
 export async function getServerSideProps(context) {
 
-    const resultado = await apiMovies.get("/movie/popular/?api_key=<<suachave>>&language=pt-BR")
+    const resultado = await apiMovies.get("/movie/popular/?language=pt-BR")
     const filmes = resultado.data.results
 
     return {
