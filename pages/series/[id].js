@@ -3,10 +3,10 @@ import Pagina from '../../components/Pagina'
 import apiMovies from '../../services/apiMovies'
 import Link from 'next/link'
 
-const Detalhes = ({ filme, atores }) => {
+const Series = ({ filme, atores, series }) => {
 
     return (
-        <Pagina titulo={filme.title}>
+        <Pagina titulo={series.name}>
             <Row>
                 <Col md={3}>
                     <Card.Img style={{ Width: '100%', height: '100%' }} variant="top" src={'https://image.tmdb.org/t/p/w500/' + filme.poster_path} />
@@ -14,20 +14,10 @@ const Detalhes = ({ filme, atores }) => {
                 </Col>
                 <Col md={9}>
                     <h3>Sinopse</h3>
-                    <p>{filme.overview}</p>
-                    <p><strong>Data de Lançamento: </strong>{filme.release_date}</p>
-                    <p><strong>Duração: </strong>{filme.runtime}min</p>
-                    <p><strong>Nota: </strong>{filme.vote_average}</p>
-                    <div>
-
-                        <ul>
-                            {filme.genres.map(item => (
-
-                                <li>{item.name}</li>
-
-                            ))}
-                        </ul>
-                    </div>
+                    <p>{series.overview}</p>
+                    <p><strong>Data de Lançamento: </strong>{series.first_air_date}</p>
+                    <p><strong>Nota: </strong>{series.vote_average}</p>
+                
 
                 </Col>
             </Row>
@@ -53,7 +43,7 @@ const Detalhes = ({ filme, atores }) => {
     )
 }
 
-export default Detalhes
+export default Series
 
 export async function getServerSideProps(context) {
 
@@ -61,11 +51,13 @@ export async function getServerSideProps(context) {
 
     const resultado = await apiMovies.get('/movie/' + id + '?language=pt-BR')
     const ator = await apiMovies.get('/movie/' + id + '/credits' + '?language=pt-BR')
+    const seriesAtor = await apiMovies.get('/tv/' + id + '/credits?language=pt-BR')
 
     const filme = resultado.data
     const atores = ator.data
+    const series = seriesAtor.data
 
     return {
-        props: { filme, atores }
+        props: { filme, atores, series }
     }
 }

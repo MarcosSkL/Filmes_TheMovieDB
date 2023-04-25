@@ -12,6 +12,7 @@ const Cabecalho = () => {
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="movies">Filmes</Nav.Link>
+            <Nav.Link href="series">Series</Nav.Link>
           </Nav>
           </Navbar.Collapse>
         </Container>
