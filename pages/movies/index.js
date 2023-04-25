@@ -14,12 +14,12 @@ const index = ({filmes}) => {
                 {filmes.map(item => (
                     <Col key={item.id} md={3} className="mb-4" >
                         <Card>
-                            <Card.Img style={{ Width: '100%', height: '100%' }} variant="top" src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`} alt={item.title} />
+                            <Card.Img style={{ Width: '100%', height: '100%' }} variant="top" src={'https://image.tmdb.org/t/p/w500/' + item.poster_path} alt={item.title} />
                             <Card.Body className='bg-secondary text-white'>
                                 <Card.Title>{item.title}</Card.Title>
                                 <p className='textwhite'>Lançamento: <strong>{item.release_date}</strong></p>
                                 <div className="d-flex flex-column align-items-end">
-                                    <Link href={`/movies/${item.id}`} className='btn btn-info text-white'>Detalhes</Link>
+                                    <Link href={'/movies/' + item.id} className='btn btn-info text-white'>Detalhes</Link>
                                 </div>
                             </Card.Body>
                         </Card>

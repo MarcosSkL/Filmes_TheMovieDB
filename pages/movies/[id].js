@@ -1,6 +1,7 @@
 import { Card, Col, Row } from 'react-bootstrap'
 import Pagina from '../../components/Pagina'
 import apiMovies from '../../services/apiMovies'
+import Link from 'next/link'
 
 const Detalhes = ({ filme, atores }) => {
 
@@ -15,7 +16,7 @@ const Detalhes = ({ filme, atores }) => {
                     <h3>Sinopse</h3>
                     <p>{filme.overview}</p>
                     <p><strong>Data de Lançamento: </strong>{filme.release_date}</p>
-                    <p><strong>Duração: </strong>{filme.runtime}</p>
+                    <p><strong>Duração: </strong>{filme.runtime}min</p>
                     <p><strong>Nota: </strong>{filme.vote_average}</p>
                     <div>
 
@@ -40,7 +41,7 @@ const Detalhes = ({ filme, atores }) => {
 
 
                         <img style={{ Width: '500px', height: '200px' }} variant="top" src={'https://image.tmdb.org/t/p/w500/' + item.profile_path} />
-                        <p><em>{item.name}</em></p>
+                        <Link href={'/actors/' + item.id}><p><em>{item.name}</em></p></Link>
                     </Col>
 
                 ))}
