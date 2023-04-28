@@ -22,7 +22,7 @@ const Actors = ({ filmesAtores, infAtores, imgAtores, series }) => {
                 </Col>
             </Row>
 
-            <h3 className="pt-3">Imagens</h3>
+            <h2 className="pt-3">Imagens</h2>
 
             <Row className="my-3">
                 {imgAtores.profiles.map((item) => (
@@ -34,7 +34,7 @@ const Actors = ({ filmesAtores, infAtores, imgAtores, series }) => {
                 ))}
             </Row>
 
-            <h3>Filmes</h3>
+            <h2>Filmes</h2>
 
             <Row className="my-3">
                 {filmesAtores.cast.map((item) => (
@@ -49,7 +49,7 @@ const Actors = ({ filmesAtores, infAtores, imgAtores, series }) => {
                 ))}
             </Row>
 
-            <h3>Series</h3>
+            <h2>Series</h2>
 
             <Row className="my-3">
                 {series.cast.map((item) => (
@@ -76,7 +76,7 @@ export async function getServerSideProps(context) {
     const infAtor = await apiMovies.get('/person/' + id + '?language=pt-BR')
     const ImgAtor = await apiMovies.get('/person/' + id + '/images?language=pt-BR')
     const AtorFilmes = await apiMovies.get('/person/' + id + '/movie_credits?language=pt-BR')
-    const seriesAtor = await apiMovies.get('/person/' + id + '/tv_credits')
+    const seriesAtor = await apiMovies.get('/person/' + id + '/tv_credits?language=pt-BR')
    
 
     const filmesAtores = AtorFilmes.data

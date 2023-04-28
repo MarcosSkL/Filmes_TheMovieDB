@@ -4,7 +4,7 @@ import { Button, Card, Col, Row } from 'react-bootstrap'
 import Pagina from '../../components/Pagina'
 import apiMovies from '../../services/apiMovies'
 
-const index = ({filmes, series}) => {
+const index = ({series}) => {
 
     return (
 
@@ -19,7 +19,7 @@ const index = ({filmes, series}) => {
                                 <Card.Title>{item.name}</Card.Title>
                                 <p className='textwhite'>Lançamento: <strong>{item.release_date}</strong></p>
                                 <div className="d-flex flex-column align-items-end">
-                                    <Link href={'/series/' + item.id} className='btn btn-info text-white'>Detalhes</Link>
+                                    <Link href={'series/' + item.id} className='btn btn-info text-white'>Detalhes</Link>
                                 </div>
                             </Card.Body>
                         </Card>
@@ -34,13 +34,10 @@ export default index
 
 export async function getServerSideProps(context) {
 
-    const resultado = await apiMovies.get("/movie/popular/?language=pt-BR")
     const seriesAtor = await apiMovies.get('/tv/popular/?language=pt-BR')
-
-    const filmes = resultado.data.results
     const series = seriesAtor.data.results
 
     return {
-      props: {filmes, series}
+      props: {series}
     }
   }

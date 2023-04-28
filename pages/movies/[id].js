@@ -32,6 +32,7 @@ const Detalhes = ({ filme, atores }) => {
                 </Col>
             </Row>
 
+
             <h3 className='pt-5'>Atores</h3>
 
             <Row className='p-3'>

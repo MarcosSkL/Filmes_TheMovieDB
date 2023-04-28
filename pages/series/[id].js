@@ -3,13 +3,13 @@ import Pagina from '../../components/Pagina'
 import apiMovies from '../../services/apiMovies'
 import Link from 'next/link'
 
-const Series = ({ filme, atores, series }) => {
+const Series = ({ series, atores }) => {
 
     return (
         <Pagina titulo={series.name}>
             <Row>
                 <Col md={3}>
-                    <Card.Img style={{ Width: '100%', height: '100%' }} variant="top" src={'https://image.tmdb.org/t/p/w500/' + filme.poster_path} />
+                    <Card.Img style={{ Width: '100%', height: '100%' }} variant="top" src={'https://image.tmdb.org/t/p/w500/' + series.poster_path} />
 
                 </Col>
                 <Col md={9}>
@@ -17,12 +17,30 @@ const Series = ({ filme, atores, series }) => {
                     <p>{series.overview}</p>
                     <p><strong>Data de Lançamento: </strong>{series.first_air_date}</p>
                     <p><strong>Nota: </strong>{series.vote_average}</p>
-                
+
 
                 </Col>
             </Row>
 
-            <h3 className='pt-5'>Atores</h3>
+            <h2 className='pt-5'>Diretor</h2>
+
+            <Row className='p-3'>
+
+                {series.created_by.map(item => (
+                    <Col md={2}>
+
+
+                        <img style={{ Width: '500px', height: '200px' }} variant="top" src={'https://image.tmdb.org/t/p/w500/' + item.profile_path} />
+                        <Link href={'/actors/' + item.id} style={{ textDecoration: "none" }} ><p><em>{item.name}</em></p></Link>
+                    </Col>
+
+                ))}
+
+
+
+            </Row>
+
+            <h2 className='pt-5'>Atores</h2>
 
             <Row className='p-3'>
 
@@ -31,7 +49,7 @@ const Series = ({ filme, atores, series }) => {
 
 
                         <img style={{ Width: '500px', height: '200px' }} variant="top" src={'https://image.tmdb.org/t/p/w500/' + item.profile_path} />
-                        <Link href={'/actors/' + item.id} style={{ textDecoration: "none"}} ><p><em>{item.name}</em></p></Link>
+                        <Link href={'/actors/' + item.id} style={{ textDecoration: "none" }} ><p><em>{item.name}</em></p></Link>
                     </Col>
 
                 ))}
@@ -39,6 +57,8 @@ const Series = ({ filme, atores, series }) => {
 
 
             </Row>
+
+
         </Pagina>
     )
 }
@@ -49,15 +69,13 @@ export async function getServerSideProps(context) {
 
     const id = context.params.id
 
-    const resultado = await apiMovies.get('/movie/' + id + '?language=pt-BR')
+    const seriesAtor = await apiMovies.get('/tv/' + id + '?language=pt-BR')
     const ator = await apiMovies.get('/movie/' + id + '/credits' + '?language=pt-BR')
-    const seriesAtor = await apiMovies.get('/tv/' + id + '/credits?language=pt-BR')
 
-    const filme = resultado.data
-    const atores = ator.data
     const series = seriesAtor.data
+    const atores = ator.data
 
     return {
-        props: { filme, atores, series }
+        props: { series, atores }
     }
 }
